@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Voting Dapp!</title>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+</head>
+<body class="container">
+  <h1>La mia prima DAPP con scrittura on blockchain e payable</h1>
+  <div>
+    <label>
+      Nome
+    </label>
+    <input type="text" class="form-control" id="name" />
+    <label>
+      NickName
+    </label>
+    <input type="text" class="form-control" id="nickname" />
+    <a href="#" onclick="createNewUser()" class="btn btn-primary">Crea utente</a>
+  </div>
+  <div>
+    <h1>DATI UTENTE IN BLOCKCHAIN</h1>
+
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <tr>
+          <td>Identità</td>
+          <td><span id="user_data_identity"></span>
+        </tr>
+        <tr>
+          <td>Nome</td>
+          <td><span id="user_data_name"></span>
+        </tr>
+        <tr>
+          <td>Nickname</td>
+          <td><span id="user_data_nickname"></span>
+        </tr>
+      </table>
+
+      <div>
+        <h1>
+        Cambia il tuo nick name (costo 0.001 ether);
+        </h1>
+        <label>
+          Cambia nickname
+        </label>
+        <input type="text" id="change_nickname" class="form-control" />
+        <a href="#" onclick="changeNickName()" class="btn btn-primary">Cambia NickName</a>
+      </div>
+      <div>
+        <h1>
+        Cambia il tuo identity (free per adesso);
+        </h1>
+        <label>
+          Cambia identity
+        </label>
+        <input type="text" id="change_identity" class="form-control" />
+        <a href="#" onclick="changeIdentity()" class="btn btn-primary">Cambia identity</a>
+      </div>
+    </div>
+  </div>
+ 
+  
+</body>
+<script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+<script src="./index.js"></script>
+</html>
