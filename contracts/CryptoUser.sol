@@ -38,7 +38,7 @@ contract CryptoUser is Ownable{
     
         for (uint i = 0; i < users.length; i++) {
             if (userToOwner[i] == _owner) {
-                return(users[i].identity, users[i].name, users[i+1].nickname);
+                return(users[i].identity, users[i].name, users[i].nickname);
             }
         }
         
