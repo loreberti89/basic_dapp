@@ -41,7 +41,6 @@ contract CryptoUser is Ownable{
                 return(users[i].identity, users[i].name, users[i+1].nickname);
             }
         }
-        return (identity, name, nickname);
         
     }
 
@@ -66,7 +65,7 @@ contract CryptoUser is Ownable{
         ChangeNickName(_nickname);    
     }
 
-    function changeIdentity(uint _id, uint _identity) public isOwner external {
+    function changeIdentity(uint _id, uint _identity) isOwner external {
         users[_id].identity = _identity;
         IdentityChangeEvent(_identity);
     }
