@@ -7,7 +7,7 @@ contract CryptoUser is Ownable{
     event ChangeNickName(string nickname);
     event IdentityChangeEvent(uint identity);
     
-    uint changeNickNameFee = 0.001 ether;
+    uint changeNickNameFee = 0.1 ether;
     
     struct User{
         uint identity;
@@ -16,7 +16,7 @@ contract CryptoUser is Ownable{
     }
 
     User[] public users;
-    mapping (uint => address) public userToOwner;
+    mapping (uint => address) userToOwner;
     mapping (address => uint) ownerUserCount;
     
 
@@ -24,7 +24,7 @@ contract CryptoUser is Ownable{
     function createUser(uint _identity, string _name, string _nickname) public {
         require(ownerUserCount[msg.sender] < 1);       
         
-        uint id = users.push(User(_identity, _name, _nickname));
+        uint id = users.push(User(_identity, _name, _nickname))-1;
         userToOwner[id] = msg.sender ;
         ownerUserCount[msg.sender]++;
         
@@ -34,11 +34,11 @@ contract CryptoUser is Ownable{
 
 
 
-    function getUserData(address _owner) external isOwner view returns (uint, string, string){
+    function getUserData() external view returns (uint, uint, string, string){
     
         for (uint i = 0; i < users.length; i++) {
-            if (userToOwner[i] == _owner) {
-                return(users[i].identity, users[i].name, users[i].nickname);
+            if (userToOwner[i] == msg.sender) {
+                return(i, users[i].identity, users[i].name, users[i].nickname);
             }
         }
         
@@ -52,22 +52,26 @@ contract CryptoUser is Ownable{
     function getUsersCount() public constant returns(uint) {
         return users.length;
     }
-    function getUsersNumberByOwner(address _owner) view isOwner external returns (uint){
-        return ownerUserCount[_owner];
+    function getUsersNumberByOwner() view external returns (uint){
+        return ownerUserCount[msg.sender];
     }
     
-    
-    
-    
-    function changeNickName(uint _id, string _nickname) public isOwner payable{
+    function changeNickName(uint _id, string _nickname) external payable{
         require(msg.value == changeNickNameFee);
+        require(msg.sender == userToOwner[_id]);
         users[_id].nickname = _nickname;
         ChangeNickName(_nickname);    
     }
 
-    function changeIdentity(uint _id, uint _identity) isOwner external {
+    function withdraw() external onlyOwner {
+        owner.transfer(this.balance);
+    }
+
+    function changeIdentity(uint _id, uint _identity) external {
+        require(msg.sender == userToOwner[_id]);
         users[_id].identity = _identity;
         IdentityChangeEvent(_identity);
     }
+
     
 }
